@@ -16,8 +16,8 @@
 
 pragma solidity 0.8.4;
 
-import "https://github.com/net2devcrypto/n2dstaking/N2DRewards.sol";
-import "https://github.com/net2devcrypto/n2dstaking/Collection.sol";
+import "https://github.com/Roskoy12/NFT/blob/main/BalderNFT.sol";
+import "https://github.com/Roskoy12/token/blob/master/Balder.sol";
 
 contract NFTStaking is Ownable, IERC721Receiver {
 
@@ -35,13 +35,13 @@ contract NFTStaking is Ownable, IERC721Receiver {
   event Claimed(address owner, uint256 amount);
 
   // reference to the Block NFT contract
-  Collection nft;
-  N2DRewards token;
+  BalderNFT nft;
+  Balder token;
 
   // maps tokenId to stake
   mapping(uint256 => Stake) public vault; 
 
-   constructor(Collection _nft, N2DRewards _token) { 
+   constructor(Collection _nft, Stake Collectoins_token) { 
     nft = _nft;
     token = _token;
   }
@@ -100,7 +100,7 @@ contract NFTStaking is Ownable, IERC721Receiver {
       Stake memory staked = vault[tokenId];
       require(staked.owner == account, "not an owner");
       uint256 stakedAt = staked.timestamp;
-      earned += 100000 ether * (block.timestamp - stakedAt) / 1 days;
+      earned += 0.009 ether * (block.timestamp - stakedAt) / 3 days;
       vault[tokenId] = Stake({
         owner: account,
         tokenId: uint24(tokenId),
@@ -124,9 +124,9 @@ contract NFTStaking is Ownable, IERC721Receiver {
      uint256 earned = 0;
       Stake memory staked = vault[tokenId];
       uint256 stakedAt = staked.timestamp;
-      earned += 100000 ether * (block.timestamp - stakedAt) / 1 days;
-    uint256 earnRatePerSecond = totalScore * 1 ether / 1 days;
-    earnRatePerSecond = earnRatePerSecond / 100000;
+      earned += 0.009 ether * (block.timestamp - stakedAt) / 3 days;
+    uint256 earnRatePerSecond = totalScore * 1 ether / 3 days;
+    earnRatePerSecond = earnRatePerSecond / 0.009;
     // earned, earnRatePerSecond
     return [earned, earnRatePerSecond];
   }
